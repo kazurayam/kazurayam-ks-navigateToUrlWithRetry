@@ -3,7 +3,7 @@ navigateToUrlWithRetry keyword for Katalon Studio
 
 This project is a product inspired by the discussion
 
-- https://forum.katalon.com/t/how-to-handle-500-internal-server-error/55038/15
+- https://forum.katalon.com/t/how-to-handle-500-internal-server-error/55038/16
 
 This project provides a jar named `kazurayam-ks-navigateToUrlWithRetry-x.x.x.jar` 
 which includes Custom keyword for Katalon Studio. You can download it and
