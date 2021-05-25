@@ -9,7 +9,7 @@ This project provides a jar named `kazurayam-ks-navigateToUrlWithRetry-x.x.x.jar
 which includes Custom keyword for Katalon Studio. You can download it and
 locate it into the `Pluguins` folder of your project.
 
-Have a look at the [demo](./Script/main/demo/Script1621949055858.groovy) for the sample code to see how to use.
+Have a look at the [demo](Scripts/main/demo/Script1621949055858.groovy) for the sample code to see how to use.
 
 ### Method signature
 
@@ -36,7 +36,7 @@ Have a look at the [demo](./Script/main/demo/Script1621949055858.groovy) for the
 | position | parameter | description |
 | -------- | --------- | ------------|
 | 1 | url | (same as above) |
-| 2 | Closure | any Groovy Closure. The logic is totally up to you. See the [demo](./Script/main/demo/Script1621949055858.groovy) for sample case. The closure should accept a parameter of type Integer as 'interval'. It must return Boolean value. It should return true when successfully navigated to the intended page; false otherwise. |
+| 2 | Closure | any Groovy Closure. The logic is totally up to you. See the [demo](Scripts/main/demo/Script1621949055858.groovy) for sample case. The closure should accept a parameter of type Integer as 'interval'. It must return Boolean value. It should return true when successfully navigated to the intended page; false otherwise. |
 | 3 | times | (same as above) |
 | 4 | interval | (same as above) |
 
