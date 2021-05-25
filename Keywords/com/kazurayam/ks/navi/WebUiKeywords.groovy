@@ -1,4 +1,4 @@
-package com.kazurayam.ks
+package com.kazurayam.ks.navi
 
 import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
@@ -31,16 +31,18 @@ public class WebUiKeywords {
 	 * with the given Interval seconds.
 	 * 
 	 * @param url
-	 * @param interval
-	 * @param times
 	 * @param criteriaXpath
+	 * @param times 1..30
+	 * @param interval 1..60
 	 * @return true when navigated to the intended web page, false otherwise after retries
 	 */
 	@Keyword
-	static Boolean navigateToUrlWithRetry(String url, int interval = 10, int times = 5, String criteriaXpath) {
+	static Boolean navigateToUrlWithRetry(String url, String criteriaXpath, Integer times = 5, Integer interval = 10) {
+		Objects.requireNonNull(url)
+		Objects.requireNonNull(criteriaXpath)
 		TestObject successIfFound = new TestObject('navigateToUrlWithRetry_criteriaXpath')
 		successIfFound.addProperty('xpath', ConditionType.EQUALS, criteriaXpath)
-		return navigateToUrlWithRetry(url, interval, times, successIfFound)
+		return navigateToUrlWithRetry(url, successIfFound, interval, times)
 	}
 
 	/**
@@ -57,24 +59,25 @@ public class WebUiKeywords {
 	 * @return true when navigated to the intended web page, false otherwise after retries
 	 */
 	@Keyword
-	static Boolean navigateToUrlWithRetry(String url, int interval = 10, int times = 5, TestObject successIfFound) {
+	static Boolean navigateToUrlWithRetry(String url, TestObject successIfFound, Integer times = 5, Integer interval = 10) {
+		Objects.requireNonNull(url)
 		Objects.requireNonNull(successIfFound)
 		Closure cls = {
 			return WebUI.verifyElementPresent(successIfFound, interval, FailureHandling.OPTIONAL)
 		}
-		return navigateToUrlWithRetry(url, interval, times, cls)
+		return navigateToUrlWithRetry(url, cls, interval, times)
 	}
 
 	/**
 	 * 
 	 * @param url
-	 * @param interval must be in the range of 1..100
+	 * @param interval must be in the range of 1..60
 	 * @param times must be in the range of 1..10
 	 * @param navigationSuccessCriteria must return a Boolean value
 	 * @return
 	 */
 	@Keyword
-	static Boolean navigateToUrlWithRetry(String url, int interval = 10, int times = 5, Closure navigationSuccessCriteria) {
+	static Boolean navigateToUrlWithRetry(String url, Closure navigationSuccessCriteria, Integer times = 5, Integer interval = 10) {
 		Objects.requireNonNull(url)
 		if (interval <= 0) {
 			throw new IllegalArgumentException("interval must be larger than or equal to 1")
@@ -85,15 +88,15 @@ public class WebUiKeywords {
 		if (times <= 0) {
 			throw new IllegalArgumentException("times must be larger than or equal to 1")
 		}
-		if (times > 10) {
-			throw new IllegalArgumentException("times must be less than or equal to 10")
+		if (times > 30) {
+			throw new IllegalArgumentException("times must be less than or equal to 30")
 		}
 		Objects.requireNonNull(navigationSuccessCriteria)
 		//
 		WebUI.navigateToUrl(url)
 		WebUI.waitForPageLoad(30)
 		for (int i = 0; i < times; i++) {
-			Boolean successful = navigationSuccessCriteria.call()
+			Boolean successful = navigationSuccessCriteria.call(interval)
 			if (successful) {
 				return true
 			}
